@@ -9,7 +9,7 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 contract TwinNFT is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
     constructor(
         address initialOwner
-    ) ERC721("MyToken", "MTK") Ownable(initialOwner) {}
+    ) ERC721("TwinNFT", "TNFT") Ownable(initialOwner) {}
 
     function safeMint(
         address to,

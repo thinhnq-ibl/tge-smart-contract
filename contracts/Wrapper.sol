@@ -9,7 +9,7 @@ struct Point {
     uint128 long;
 }
 
-struct Tree {
+struct Land {
     uint128 initialPlantedTree;
     uint128 currentPlantedTree;
     uint128 carbonCreditLand;
@@ -17,5 +17,15 @@ struct Tree {
 }
 
 contract Wrapper {
+    mapping(uint => Land) lands;
+
     constructor() {}
+
+    function setLand(uint _landId, Land calldata _landInfo) public {
+        lands[_landId] = _landInfo;
+    }
+
+    function getLand(uint _landId) public view returns (Land memory) {
+        return lands[_landId];
+    }
 }
