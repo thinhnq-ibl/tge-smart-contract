@@ -28,4 +28,12 @@ contract Wrapper {
     function getLand(uint _landId) public view returns (Land memory) {
         return lands[_landId];
     }
+
+    function getCarbonCredit(address _user) public view returns (uint) {
+        return 0;
+    }
+
+    function getTree(address _user, uint _landId) public view returns (uint) {
+        return 0;
+    }
 }
