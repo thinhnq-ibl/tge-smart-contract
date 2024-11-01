@@ -11,13 +11,17 @@ struct Order {
     uint price;
     uint saleAmount;
     bool isApproved;
+    address owner;
 }
 
 contract Marketplace {
     uint public orderIds;
     mapping(uint => Order) public orders;
+    ERC1155 public fractionalSc;
 
-    constructor() {}
+    constructor(ERC1155 _fractionalSc) {
+        fractionalSc = _fractionalSc;
+    }
 
     function createOrder(
         uint _fragmentNFTId,
@@ -29,9 +33,18 @@ contract Marketplace {
         newOrder.amount = _amount;
         newOrder.fragmentNFTId = _fragmentNFTId;
         newOrder.price = _price;
+        newOrder.owner = msg.sender;
 
         orders[orderIds] = newOrder;
         orderIds++;
+
+        fractionalSc.safeTransferFrom(
+            msg.sender,
+            address(this),
+            _fragmentNFTId,
+            _amount,
+            ""
+        );
     }
 
     function approveOrder(uint _orderId) public {
@@ -41,5 +54,12 @@ contract Marketplace {
     function buy(uint _orderId, uint _amount) public {
         orders[_orderId].saleAmount += _amount;
         // TODO: make transfer amount
+        fractionalSc.safeTransferFrom(
+            orders[_orderId].owner,
+            msg.sender,
+            orders[_orderId].fragmentNFTId,
+            _amount,
+            ""
+        );
     }
 }
