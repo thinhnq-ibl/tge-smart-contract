@@ -9,7 +9,7 @@ const { API_URL, PRIVATE_KEY, ETHERSCAN_API_KEY, HOLESKY_API_URL } =
 
 const config: HardhatUserConfig = {
   solidity: {
-    version: "0.8.27",
+    version: "0.8.20",
     settings: {
       optimizer: {
         enabled: true,
