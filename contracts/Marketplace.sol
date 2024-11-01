@@ -3,6 +3,7 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 struct Order {
     uint id;
@@ -14,12 +15,12 @@ struct Order {
     address owner;
 }
 
-contract Marketplace {
+contract Marketplace is Initializable {
     uint public orderIds;
     mapping(uint => Order) public orders;
     ERC1155 public fractionalSc;
 
-    constructor(ERC1155 _fractionalSc) {
+    function initialize(ERC1155Supply _fractionalSc) public initializer {
         fractionalSc = _fractionalSc;
     }
 
@@ -53,7 +54,6 @@ contract Marketplace {
 
     function buy(uint _orderId, uint _amount) public {
         orders[_orderId].saleAmount += _amount;
-        // TODO: make transfer amount
         fractionalSc.safeTransferFrom(
             orders[_orderId].owner,
             msg.sender,

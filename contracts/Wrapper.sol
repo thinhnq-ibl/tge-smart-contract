@@ -6,6 +6,7 @@ pragma solidity ^0.8.20;
 
 import "@openzeppelin/contracts/token/ERC1155/extensions/ERC1155Supply.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 struct Point {
     uint128 lat;
@@ -19,12 +20,18 @@ struct Land {
     Point[] coordinate;
 }
 
-contract Wrapper {
+contract Wrapper is Initializable {
     mapping(uint => Land) lands;
     ERC1155Supply public fractionalSc;
-    ERC721 public nftSC;
+    ERC721 public nftSc;
 
-    constructor() {}
+    function initialize(
+        ERC1155Supply _fractionalSc,
+        ERC721 _nftSc
+    ) public initializer {
+        fractionalSc = _fractionalSc;
+        nftSc = _nftSc;
+    }
 
     function setLand(uint _landId, Land calldata _landInfo) public {
         lands[_landId] = _landInfo;
