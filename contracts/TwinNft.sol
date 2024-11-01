@@ -14,8 +14,11 @@ contract TwinNFT is
 {
     uint256 public tokenId;
 
-    function initialize() public initializer {
-        __ERC721_init("Panda", "PND");
+    function initialize(
+        string memory _name,
+        string memory _symbol
+    ) public initializer {
+        __ERC721_init(_name, _symbol);
         __ERC721URIStorage_init();
         __Ownable_init(msg.sender);
     }
