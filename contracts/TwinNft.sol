@@ -6,7 +6,7 @@ import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721URISto
 import "@openzeppelin/contracts-upgradeable/access/OwnableUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract TwinNFT is
+contract TwinNft is
     Initializable,
     ERC721Upgradeable,
     ERC721URIStorageUpgradeable,
@@ -21,10 +21,6 @@ contract TwinNFT is
         __ERC721_init(_name, _symbol);
         __ERC721URIStorage_init();
         __Ownable_init(msg.sender);
-    }
-
-    constructor() {
-        _disableInitializers();
     }
 
     function mint(string memory uri) public {
